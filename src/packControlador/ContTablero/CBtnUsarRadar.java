@@ -18,7 +18,7 @@ public class CBtnUsarRadar implements MouseListener {
 				TableroJuego.getTableroJuego().marcarRadar();
 				TableroJuego.getTableroJuego().actualizarCantidades();
 			} else {
-				JOptionPane.showMessageDialog(null, "¡No dispone de mas usos de radar!", "Alerta",
+				JOptionPane.showMessageDialog(null, "No dispone de mas usos de radar!", "Alerta",
 						JOptionPane.WARNING_MESSAGE);
 			}
 		}

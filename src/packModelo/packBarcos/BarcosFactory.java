@@ -16,14 +16,18 @@ public class BarcosFactory {
 
 	public Barco crearBarco(String pTipo, Coordenada pC, boolean pV) {
 		Barco unBarco = null;
-		if (pTipo == "Fragata") {
+		if (pTipo .equals( "Fragata")) {
 			unBarco = new Fragata(pC);
-		} else if (pTipo == "Submarino") {
+
+		} else if (pTipo .equals( "Submarino")) {
 			unBarco = new Submarino(pC, pV);
-		} else if (pTipo == "Destructor") {
+
+		} else if (pTipo .equals( "Destructor")) {
 			unBarco = new Destructor(pC, pV);
-		} else if (pTipo == "Portaaviones") {
+
+		} else if (pTipo.equals( "Portaaviones")) {
 			unBarco = new Portaaviones(pC, pV);
+
 		}
 		return unBarco;
 	}

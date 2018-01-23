@@ -11,10 +11,30 @@ public abstract class Barco {
 	private ListaCoordenadas tocadas;
 	private String tipo;
 	private int escudo = 0;
+	private Coordenada pivote;
+	private boolean vertical;
 
-	public Barco() {
+	public Barco(Coordenada pPivote,boolean pVertical) {
+		pivote=pPivote;
+		vertical=pVertical;
 		posicion = new ListaCoordenadas();
 		tocadas = new ListaCoordenadas();
+	}
+
+	public int getPivX(){
+		return pivote.getX();
+	}
+
+	public int getVertical(){
+		if(vertical){
+			return 0;
+		}else {
+			return 1;
+		}
+	}
+
+	public int getPivY(){
+		return pivote.getY();
 	}
 
 	public int tocar(Coordenada pCoordenada) {

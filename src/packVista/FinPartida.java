@@ -69,7 +69,7 @@ public class FinPartida extends JFrame {
 		panel_2.add(ranking, BorderLayout.NORTH);
 		ranking.addMouseListener(new CBtnRanking(this));
 		
-		JButton principal = new JButton("Volver al Menú principal");
+		JButton principal = new JButton("Volver al Menu principal");
 		panel_2.add(principal, BorderLayout.SOUTH);
 		principal.addMouseListener(new CBtnPrincipal(this));
 	}

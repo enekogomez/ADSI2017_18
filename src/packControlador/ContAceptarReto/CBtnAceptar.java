@@ -1,18 +1,21 @@
 package packControlador.ContAceptarReto;
 
+import packControlador.retar.Gestor_Retos;
+import packModelo.Battleship;
+import packVista.AceptarReto;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
 
 public class CBtnAceptar implements MouseListener{
-	private JFrame vista;
-	public CBtnAceptar(JFrame pVista) {
-		this.vista=pVista;
-	}
+
+
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		AceptarReto.getFrame().aceptarReto();
 		
 	}
 
@@ -30,7 +33,6 @@ public class CBtnAceptar implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		this.vista.dispose();
 		//TODO Crear la nueva partida segun especificaciones seleccionadas
 	}
 

@@ -1,5 +1,9 @@
 package packModelo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Observable;
 
@@ -7,6 +11,7 @@ import org.json.simple.JSONArray;
 
 import packControlador.retar.Gestor_Retos;
 import packControlador.retar.Gestor_Usuario;
+import packGestores.GestorBD;
 import packGestores.GestorNiveles;
 import packModelo.packBarcos.Barco;
 import packModelo.packBarcos.BarcoNoEncException;
@@ -25,7 +30,9 @@ public class Battleship extends Observable {
 	private boolean juegoFinalizado;
 	private boolean avisar = true;
 
-	private Battleship() {}
+	private Battleship() {
+
+	}
 
 	public static Battleship getBattleship() {
 		if (theBattleship == null) {
@@ -37,19 +44,29 @@ public class Battleship extends Observable {
 	public void inicializarReto(String nombre) {
 		usuario = new Usuario(nombre,Partida.getInstancia().getFlotaH());
 		ordenador = new Ordenador(Partida.getInstancia().getFlotaO());
-		
 		//ordenador.imprimirTablero();
 		turno = true;
 		juegoFinalizado = false;
+
+		Collection<Cantidades>tmp=new ArrayList<>();
+		tmp.add(usuario.getCantidad());
+		tmp.add(ordenador.getCantidad());
+		Partida.getInstancia().iniciarPartidaReto(usuario,ordenador,tmp);
 	}
 
 	public void inicializar(String nombre) {
 		usuario = new Usuario(nombre);
+		usuario.colocarBarcosAleatorios();
 		ordenador = new Ordenador();
 		ordenador.colocarBarcosAleatorios();
 		//ordenador.imprimirTablero();
 		turno = true;
 		juegoFinalizado = false;
+
+		Collection<Cantidades>tmp=new ArrayList<>();
+		tmp.add(usuario.getCantidad());
+		tmp.add(ordenador.getCantidad());
+		Partida.getInstancia().iniciarPartida(usuario.getListaBarcos(),ordenador.getListaBarcos(),usuario,ordenador,tmp);
 	}
 
 	public void colocarBarcoUs(String pTipo, Coordenada pC, boolean pVertical) {
@@ -243,7 +260,7 @@ public class Battleship extends Observable {
 		GestorNiveles.getGestorNiveles().conseguirNiveles(nivel);
 	}
 
-	public String obtenerUsuarios(){
+	public JSONArray obtenerUsuarios(){
 		return Gestor_Usuario.getInstancia().obtenerUsuarios();
 	}
 
@@ -251,22 +268,57 @@ public class Battleship extends Observable {
 		//recogemos la informaci�n de la partida actual
 		Partida act=Partida.getInstancia();
 		Date laFecha=new Date();
-		ListaBarcos laLIstaBarcosO=act.getFlotaO();
-		ListaBarcos laLIstaBarcosH=act.getFlotaH();
+		String codFlotaO=(Long.toString (System.currentTimeMillis()));
 		int laPuntuacion=act.getPuntuacion();
-		int elNivel=act.getConfig();
+		act.getFlotaO().guardar(codFlotaO);
+		String codFlotaH=(Long.toString (System.currentTimeMillis()));
+		act.getFlotaH().guardar(codFlotaH);
+		int elNivel=Nivel.getLvl();
 		//creamos un nuevo reto
-		return Gestor_Retos.getInstancia().crearReto(act.getRetador(),UsrSeleccionado,laFecha,laLIstaBarcosO,laLIstaBarcosH,laPuntuacion,elNivel);
+		return Gestor_Retos.getInstancia().crearReto(act.getRetador(),UsrSeleccionado,laFecha,codFlotaO,codFlotaH,laPuntuacion,elNivel);
 	}
 
-	public String obtenerMisRetos(String usr){
-		return Gestor_Retos.getInstancia().obtenerMisRetos(usr);
+	public JSONArray obtenerMisRetos(){
+		return Gestor_Retos.getInstancia().obtenerMisRetos(usuario.getNombre());
+	}
+
+
+	/**
+	 * método que carga las instancias de flotas correspondientes (flota humano / flota ordenador) a la situación inicial del reto
+	 * @param idFlota
+	 * @return
+	 */
+	private ListaBarcos cargarBarcos(String idFlota){
+		ResultSet res= GestorBD.getGestorBD().Select("SELECT * FROM barco where idFlota="+idFlota+"");
+		String idBarco;
+		ListaBarcos result=new ListaBarcos();
+		Barco tmp;
+		try {
+			while (res.next()) {
+				String tipo=res.getString("tipoBarco");
+				Coordenada eje=new Coordenada(res.getInt("ejeX"),res.getInt("ejeY"));
+				Boolean vertical=res.getBoolean("vertical");
+				tmp= BarcosFactory.getBarcoFactory().crearBarco(tipo,eje,vertical);
+				result.addBarco(tmp);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			res.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public boolean cargarReto(String cod){
-		GestorNiveles.getGestorNiveles().conseguirNiveles(Gestor_Retos.getInstancia().getNivel(cod));
-		ListaBarcos barcosH=Gestor_Retos.getInstancia().getFlotaH(cod);
-		ListaBarcos barcosO=Gestor_Retos.getInstancia().getFlotaO(cod);
+		int lvl=Gestor_Retos.getInstancia().getNivel(cod);
+		System.out.println(lvl);
+		GestorNiveles.getGestorNiveles().conseguirNiveles(lvl);
+		ListaBarcos barcosH=cargarBarcos(Gestor_Retos.getInstancia().getFlotaH(cod));
+		ListaBarcos barcosO=cargarBarcos(Gestor_Retos.getInstancia().getFlotaO(cod));
 		if(barcosH==null || barcosO==null){
 			//ocurrio un error
 			return false;

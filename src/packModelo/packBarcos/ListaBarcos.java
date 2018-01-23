@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import packGestores.GestorBD;
 import packModelo.Nivel;
 import packModelo.packCoordenada.Coordenada;
 
@@ -44,6 +45,13 @@ public class ListaBarcos {
 		return cuantos;
 	}
 
+	public void guardar(String pCod){
+		Iterator<Barco> it=listaBarcos.iterator();
+		while(it.hasNext()) {
+			Barco tmp=it.next();
+			GestorBD.getGestorBD().Update("Insert into barco values('"+pCod+"','"+tmp.getTipo()+"','"+tmp.getPivX()+"','"+tmp.getPivY()+"','"+tmp.getVertical()+"')");
+		}
+	}
 	public Barco buscarBarco(Coordenada pCoordenada) throws BarcoNoEncException {
 		Iterator<Barco> itr = getIterator();
 		boolean encontrado = false;

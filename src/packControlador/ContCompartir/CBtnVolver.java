@@ -5,7 +5,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
 
-import packGestores.GestorCompartir;
+//import packGestores.GestorCompartir;
 import packVista.FinPartida;
 
 public class CBtnVolver implements MouseListener{

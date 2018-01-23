@@ -70,7 +70,7 @@ public class GestorNiveles {
 	 * consigue los datos del nivel fila, columnas, dinero, valor escudo y numero de armas
 	 */
 	private void conseguirNivel(int nivel) {
-		
+		Nivel.setNivel(nivel);
 		ResultSet res = GestorBD.getGestorBD().Select("SELECT * FROM niveles where nivel = "+nivel+"");
 		try {
 			while (res.next()) {

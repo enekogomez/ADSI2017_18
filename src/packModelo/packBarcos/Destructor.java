@@ -6,7 +6,7 @@ import packModelo.packCoordenada.Coordenada;
 public class Destructor extends Barco {
 
 	public Destructor(Coordenada pC, boolean pVertical) {
-		super();
+		super(pC,pVertical);
 		setTipo("Destructor");
 		getPosicion().addCoordenada(pC);
 		int i = 0;

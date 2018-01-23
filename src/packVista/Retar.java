@@ -3,24 +3,22 @@ package packVista;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import javafx.scene.control.ComboBox;
 
-import javax.swing.JToggleButton;
 import java.awt.FlowLayout;
-import javax.swing.JSlider;
-import javax.swing.JList;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
+
+import org.json.simple.JSONArray;
 import packControlador.ContRetar.*;
+import packGestores.GestorBD;
+import packModelo.Battleship;
+
 public class Retar extends JFrame {
 	private JComboBox comboBox;
 	private JPanel contentPane;
+	private static Retar instancia;
 
 	/**
 	 * Launch the application.
@@ -29,6 +27,8 @@ public class Retar extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					Battleship.getBattleship().conseguiDatos(1);
+					Battleship.getBattleship().inicializar("Edgar");
 					Retar frame = new Retar();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -38,10 +38,17 @@ public class Retar extends JFrame {
 		});
 	}
 
+	public static Retar getFrame(){
+		if(instancia == null){
+			instancia = new Retar();
+		}
+		return instancia;
+	}
+
 	/**
 	 * Create the frame.
 	 */
-	public Retar() {
+	private Retar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -72,10 +79,26 @@ public class Retar extends JFrame {
 		JButton retar = new JButton("Retar");
 		panel_2.add(retar);
 		retar.addMouseListener(new CBtnRetar(this));
+		getSeleccionRetar();
 	}
-	
-	public String getSeleccionRetar(){
-		// TODO
-		return (String)comboBox.getSelectedItem();
+
+	private void getSeleccionRetar(){
+		JSONArray json= Battleship.getBattleship().obtenerUsuarios();
+
+		for(int i= json.size()-1; i >= 0;i--) {
+			comboBox.addItem((String)json.get(i));
+		}
+	}
+	public void realizarReto(){
+
+		String tmp=(String) comboBox.getSelectedItem();
+		System.out.println(tmp);
+		if(tmp==null){
+			JOptionPane.showMessageDialog(null, "Error al realizar el reto");
+		}else{
+			Battleship.getBattleship().retar(tmp);
+		}
+
+
 	}
 }

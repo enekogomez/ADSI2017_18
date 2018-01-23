@@ -11,13 +11,13 @@ public class Reto {
     private String usrRetador;
     private String usrRetado;
     private Date fecha;
-    private ListaBarcos flotaH;
-    private ListaBarcos flotaO;
+    private String flotaH;
+    private String flotaO;
     private int config;
 
     //constructora de retos
 
-    public Reto(String elRetador,String elRetado,Date laFecha,ListaBarcos laLIstaBarcosO,ListaBarcos laLIstaBarcosH,int laPuntuacion,int elNivel,String pCod){
+    public Reto(String elRetador,String elRetado,Date laFecha,String laLIstaBarcosO,String laLIstaBarcosH,int laPuntuacion,int elNivel,String pCod){
         //generamos un código en función del reloj del sistema
         cod= pCod;
         //cargamos toda la información del nuevo reto
@@ -36,7 +36,7 @@ public class Reto {
         return puntuacion;
     }
 
-    public ListaBarcos getFlotaH() {
+    public String getFlotaH() {
 
         return flotaH;
     }
@@ -45,7 +45,7 @@ public class Reto {
         return usrRetador;
     }
 
-    public ListaBarcos getFlotaO() {
+    public String getFlotaO() {
 
         return flotaO;
     }

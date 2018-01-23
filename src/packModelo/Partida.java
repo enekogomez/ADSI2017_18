@@ -29,6 +29,23 @@ public class Partida {
         }
         return instancia;
     }
+    public void iniciarPartidaReto(Usuario usu,Ordenador ord,Collection<Cantidades> cant){
+        usr=usu;
+        ia=ord;
+        fecha=new Date();
+        cantidades=cant;
+        puntuacion=0;
+    }
+
+    public void iniciarPartida(ListaBarcos fH,ListaBarcos fO,Usuario usu,Ordenador ord,Collection<Cantidades> cant){
+        usr=usu;
+        flotaO=fO;
+        flotaH=fH;
+        ia=ord;
+        fecha=new Date();
+        cantidades=cant;
+        puntuacion=0;
+    }
 
     //getters
 

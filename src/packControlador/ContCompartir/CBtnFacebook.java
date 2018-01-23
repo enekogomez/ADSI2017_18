@@ -3,7 +3,7 @@ package packControlador.ContCompartir;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import packGestores.GestorCompartir;
+//import packGestores.GestorCompartir;
 
 public class CBtnFacebook implements MouseListener{
 
@@ -27,7 +27,7 @@ public class CBtnFacebook implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		GestorCompartir.getGestorCompartir().compartirPorFacebook();
+		//GestorCompartir.getGestorCompartir().compartirPorFacebook();
 		
 	}
 

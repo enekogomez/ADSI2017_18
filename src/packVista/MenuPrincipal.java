@@ -13,6 +13,7 @@ import packControlador.ContMenuPrincipal.CBtnSalir;
 
 public class MenuPrincipal extends JFrame {
 
+	String usr;
 	/**
 	 * 
 	 */
@@ -70,6 +71,9 @@ public class MenuPrincipal extends JFrame {
 		btnNewButton_2.setBounds(144, 183, 179, 25);
 		btnNewButton_2.addMouseListener(new CBtnSalir());
 		contentPane.add(btnNewButton_2);
+	}
+	public void setUsr(String pNombre){
+		usr=pNombre;
 	}
 	
 	public static MenuPrincipal getMenuPrincipal() {

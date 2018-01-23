@@ -56,10 +56,10 @@ public class Nivel {
 	public static int NUM_SUBMARINO;
 	public static int NUM_PORTAAVIONES;
 
-	public static int nivel;
+	public static int Nivel;
 
-	private Nivel(int pNivel){
-		nivel=pNivel;
+	public static void setNivel(int nivel) {
+		Nivel = nivel;
 	}
 
 	// Devuelve la longitud del tipo de barco
@@ -217,7 +217,7 @@ public class Nivel {
 		NUM_PORTAAVIONES = nUM_PORTAAVIONES;
 	}
 
-	public static int getLvl(){return nivel;}
+	public static int getLvl(){return Nivel;}
 
 
 	

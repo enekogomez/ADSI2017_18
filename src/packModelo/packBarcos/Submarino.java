@@ -6,7 +6,7 @@ import packModelo.packCoordenada.Coordenada;
 public class Submarino extends Barco {
 
 	public Submarino(Coordenada pC, boolean pVertical) {
-		super();
+		super(pC,pVertical);
 		setTipo("Submarino");
 		getPosicion().addCoordenada(pC);
 		int i = 0;

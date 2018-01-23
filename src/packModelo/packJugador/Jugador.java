@@ -39,7 +39,7 @@ public abstract class Jugador extends Observable {
 		dinero = Nivel.DINERO_INICIAL;
 		radar = new Radar();
 	}
-
+	public Cantidades getCantidad(){return armamento;}
 	public boolean haGanado() {
 		return barcosEneDest.completa();
 	}
