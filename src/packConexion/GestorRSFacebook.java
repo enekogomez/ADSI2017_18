@@ -15,7 +15,7 @@ public class GestorRSFacebook implements RRSSInterface{
     }
 
     @Override
-    public boolean login() {
+    public String login() {
         gestorFacebook = GestorFacebook.init();
         return GestorFacebook.login();
     }
