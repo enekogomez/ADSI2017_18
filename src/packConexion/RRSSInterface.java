@@ -1,8 +1,8 @@
-public interface AuthInterface {
+public interface RSSInterface {
 
 
 
-    public boolean login();
+    public String login();
 
     public boolean post(String message, String token);
 
