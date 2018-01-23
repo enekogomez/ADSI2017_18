@@ -15,7 +15,7 @@ public class GestorRSGoogle implements RRSSInterface{
     }
 
     @Override
-    public boolean login() {
+    public String login() {
         gestorGoogle = GestorGoogle.init();
         return GestorGoogle.login();
     }
