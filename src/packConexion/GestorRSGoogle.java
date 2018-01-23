@@ -1,4 +1,4 @@
-public class GestorRSGoogle implements AuthInterface{
+public class GestorRSGoogle implements RRSSInterface{
 
 
     private GestorRSGoogle unGestorRSGoogle;
